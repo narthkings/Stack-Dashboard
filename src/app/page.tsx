@@ -30,6 +30,8 @@ export default function Home() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [wallet, setWallet] = useState<IWallet>();
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [trIsLoading, setIsTrxLoading] = useState(false);
   const [openCalendar2, setOpenCalendar2] = useState(false);
   const [date, setDate] = useState<Date | undefined>(new Date(2025, 5, 12));
   const [toDate, setToDate] = useState<Date | undefined>(new Date(2025, 5, 12));
@@ -52,17 +54,25 @@ export default function Home() {
   ];
 
   const fetchAllTransactions = async () => {
+    setIsTrxLoading(true)
     try {
       const req = await axiosClient("/transactions");
+      setIsTrxLoading(false)
       setTransactions(req?.data);
-    } catch (error) { }
+    } catch (error) {
+      setIsTrxLoading(false)
+    }
   };
 
   const fetchWalletBalance = async () => {
+    setIsLoading(true);
     try {
       const req = await axiosClient("/wallet");
+      setIsLoading(false);
       setWallet(req?.data);
-    } catch (error) { }
+    } catch (error) {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -82,7 +92,8 @@ export default function Home() {
             <BalanceCard
               showInfo={false}
               label="Available Balance"
-              amount={wallet?.balance ?? 0}
+              amount={wallet?.balance as number}
+              isLoading={isLoading}
             />
             <Button
               size={"lg"}
@@ -119,19 +130,23 @@ export default function Home() {
         <div className="w-1/4">
           <BalanceCard
             label="Ledger Balance"
-            amount={wallet?.ledger_balance ?? 0}
+            amount={wallet?.ledger_balance as number}
+            isLoading={isLoading}
           />
           <BalanceCard
             label="Total Payout"
-            amount={wallet?.total_payout ?? 0}
+            amount={wallet?.total_payout as number}
+            isLoading={isLoading}
           />
           <BalanceCard
             label="Total Revenue"
-            amount={wallet?.total_revenue ?? 0}
+            amount={wallet?.total_revenue as number}
+            isLoading={isLoading}
           />
           <BalanceCard
             label="Pending Payout"
-            amount={wallet?.pending_payout ?? 0}
+            amount={wallet?.pending_payout as number}
+            isLoading={isLoading}
           />
         </div>
       </section>
@@ -329,7 +344,7 @@ export default function Home() {
         </div>
 
         <hr className="my-10 border-t border-gray-300" />
-        <TransactionSection transactions={transactions} />
+        <TransactionSection isLoading={trIsLoading} transactions={transactions} />
 
       </section>
     </main>
