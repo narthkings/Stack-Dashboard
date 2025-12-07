@@ -1,0 +1,12 @@
+export { default as MainStackLogo } from './mainstack-logo.svg';
+export { default as Home } from './home.svg';
+export { default as Analytics } from './analytics.svg';
+export { default as Apps } from './apps.svg';
+export { default as Cash } from './cash.svg';
+export { default as CRM } from './crm.svg';
+export { default as Chat } from './chat.svg';
+export { default as Info } from './info.svg';
+export { default as RedArrow } from './red-arrow.svg';
+export { default as Empty } from './empty.svg';
+export { default as GreenArrow } from './green-arrow.svg';
+export { default as Notification } from './notifications.svg';

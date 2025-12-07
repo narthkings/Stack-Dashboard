@@ -1,65 +1,337 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts"
+import NavBar from "@/components/navbar";
+import { GoDownload } from "react-icons/go";
+import { CgChevronDown } from "react-icons/cg";
+import { Calendar } from "@/components/ui/calendar";
+import { ChevronDownIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { MultiSelect } from "@/components/ui/MultiSelect";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import axiosClient from "@/utils/axios";
+import { ITransaction, IWallet } from "@/utils/types";
+import TransactionSection from "@/components/TransactionSection";
+import BalanceCard from "@/components/BalanceCard";
 
 export default function Home() {
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [wallet, setWallet] = useState<IWallet>();
+  const [open, setOpen] = useState(false);
+  const [openCalendar2, setOpenCalendar2] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(new Date(2025, 5, 12));
+  const [toDate, setToDate] = useState<Date | undefined>(new Date(2025, 5, 12));
+  const [statuses, setStatuses] = useState<string[]>([]);
+  const [trxTypes, setTrxTypes] = useState<string[]>([]);
+  const data = [
+    { date: "Apr 1, 2022", value: 20 },
+    { date: "Apr 30, 2022", value: 30 },
+  ];
+
+  const statusOptions = [
+    { label: "Successful", value: "successful" },
+    { label: "Pending", value: "pending" },
+    { label: "Failed", value: "failed" },
+  ];
+
+  const trxOptions = [
+    { label: "Withdrawal", value: "withdrawal" },
+    { label: "Deposit", value: "deposit" },
+  ];
+
+  const fetchAllTransactions = async () => {
+    try {
+      const req = await axiosClient("/transactions");
+      setTransactions(req?.data);
+    } catch (error) { }
+  };
+
+  const fetchWalletBalance = async () => {
+    try {
+      const req = await axiosClient("/wallet");
+      setWallet(req?.data);
+    } catch (error) { }
+  }
+
+  useEffect(() => {
+    (async () => {
+      await fetchAllTransactions();
+      await fetchWalletBalance();
+    })();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <main className="p-8">
+      <NavBar />
+
+      <section className="flex justify-between space-x-30 mt-40 w-[80%] mx-auto">
+        <div className="w-5/6">
+          <section className="flex space-x-16 ">
+            <BalanceCard
+              showInfo={false}
+              label="Available Balance"
+              amount={wallet?.balance ?? 0}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <Button
+              size={"lg"}
+              variant="ghost"
+              className="bg-(--black) text-white font-semibold p-6 rounded-full w-1/6 text-[1rem] cursor-pointer"
+            >
+              Withdraw
+            </Button>
+          </section>
+          <div className="w-full h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data} margin={{ top: 60, left: 0, right: 0, bottom: 40 }}>
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#FF6A00"
+                  strokeWidth={3}
+                  dot={false}
+                />
+                <XAxis
+                  dataKey="date"
+                  axisLine={true}
+                  tickLine={false}
+                  tick={{ fill: "#A0A6B1", fontSize: 13 }}
+                  padding={{ left: 31, right: 25 }}
+                />
+                <YAxis hide={true} />
+                <Tooltip cursor={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </main>
-    </div>
+
+        <div className="w-1/4">
+          <BalanceCard
+            label="Ledger Balance"
+            amount={wallet?.ledger_balance ?? 0}
+          />
+          <BalanceCard
+            label="Total Payout"
+            amount={wallet?.total_payout ?? 0}
+          />
+          <BalanceCard
+            label="Total Revenue"
+            amount={wallet?.total_revenue ?? 0}
+          />
+          <BalanceCard
+            label="Pending Payout"
+            amount={wallet?.pending_payout ?? 0}
+          />
+        </div>
+      </section>
+
+      <section className="mt-20 w-9/12 mx-auto">
+        <div className="flex justify-between items-center">
+          <div>
+            <div className="font-bold text-[1.5rem] text-(--black)">
+              {transactions?.length ?? 0} Transactions
+            </div>
+            <div className="font-medium text-[0.875rem]">
+              Your transactions for the last 7 days
+            </div>
+          </div>
+          <div className="flex gap-x-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  size={"lg"}
+                  variant="ghost"
+                  className="bg-(--light-gray) font-semibold p-6 rounded-full text-[1rem] text-(--black) w-2/4 cursor-pointer"
+                >
+                  Filter
+                  <CgChevronDown />
+                </Button>
+              </SheetTrigger>
+
+              <SheetContent
+                className={cn(
+                  "bg-background fixed z-50 flex flex-col gap-4 shadow-lg",
+                  "transition-transform duration-500 ease-in-out",
+                  "translate-x-full",
+                  "data-[state=open]:translate-x-0",
+                  "data-[state=closed]:translate-x-full",
+                  "m-3 w-[30%] p-4 rounded-4xl"
+                )}
+              >
+                <SheetHeader>
+                  <SheetTitle className="font-bold text-[1.5rem] text-(--black)">
+                    Filter
+                  </SheetTitle>
+                  <SheetDescription>
+                    <div className="flex gap-x-2 my-8">
+                      <Badge
+                        variant="outline"
+                        className="font-semibold text-[0.875rem] h-8 min-w-25"
+                      >
+                        Today
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="font-semibold text-[0.875rem] h-8 min-w-25"
+                      >
+                        Last 7 days
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="font-semibold text-[0.875rem] h-8 min-w-25"
+                      >
+                        This month
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="font-semibold text-[0.875rem] h-8 min-w-25"
+                      >
+                        Last 3 months
+                      </Badge>
+                    </div>
+                    <div className="space-y-5">
+                      <div className="space-y-1.5">
+                        <div className="text-(--black) font-semibold text-[1rem]">
+                          Date Range
+                        </div>
+                        <div className="flex gap-x-1 w-full px-1 justify-between">
+                          <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                id="date"
+                                className="bg-(--light-gray) rounded-xl h-12 w-[50%] justify-between font-normal"
+                              >
+                                {date
+                                  ? date.toLocaleDateString("en-NG", {
+                                    month: "short",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                  })
+                                  : "Select date"}
+                                <ChevronDownIcon />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto overflow-hidden p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={date}
+                                onSelect={setDate}
+                                className="rounded-lg border [--cell-size:--spacing(11)] md:[--cell-size:--spacing(12)]"
+                                buttonVariant="ghost"
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <Popover open={openCalendar2} onOpenChange={setOpenCalendar2}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                id="date"
+                                className="bg-(--light-gray) rounded-xl h-12 w-[50%] justify-between font-normal"
+                              >
+                                {toDate
+                                  ? toDate.toLocaleDateString("en-NG", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  })
+                                  : "Select date"}
+                                <ChevronDownIcon />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-auto overflow-hidden p-0"
+                              align="start"
+                              side="bottom"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={toDate}
+                                onSelect={setToDate}
+                                className="rounded-lg border [--cell-size:--spacing(11)] md:[--cell-size:--spacing(12)]"
+                                buttonVariant="ghost"
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="text-(--black) font-semibold text-[1rem]">
+                          Transaction Type
+                        </div>
+                        <MultiSelect
+                          options={trxOptions}
+                          value={trxTypes}
+                          onChange={setTrxTypes}
+                          placeholder="Select transaction type"
+                          className="rounded-xl h-12"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="text-(--black) font-semibold text-[1rem]">
+                          Transaction Status
+                        </div>
+                        <MultiSelect
+                          options={statusOptions}
+                          value={statuses}
+                          onChange={setStatuses}
+                          placeholder="Select transaction status"
+                          className="rounded-xl h-12"
+                        />
+                      </div>
+                    </div>
+                  </SheetDescription>
+                </SheetHeader>
+                <SheetFooter className="flex flex-row justify-between gap-3">
+                  <SheetClose asChild>
+                    <Button
+                      variant="outline"
+                      className="rounded-full font-semibold text-[1rem] w-2/4"
+                      size={"lg"}
+                    >
+                      Clear
+                    </Button>
+                  </SheetClose>
+                  <Button
+                    type="submit"
+                    className="rounded-full font-semibold text-[1rem] w-2/4"
+                    size={"lg"}
+                  >
+                    Apply
+                  </Button>
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
+
+            <Button
+              variant="ghost"
+              size={"lg"}
+              className="bg-(--light-gray) font-semibold p-6 text-(--black) rounded-full text-[1rem] w-3/4 cursor-pointer"
+            >
+              Export list
+              <GoDownload size={"10"} color="#131316" />
+            </Button>
+          </div>
+        </div>
+
+        <hr className="my-10 border-t border-gray-300" />
+        <TransactionSection transactions={transactions} />
+
+      </section>
+    </main>
   );
 }
