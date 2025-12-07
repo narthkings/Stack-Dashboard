@@ -1,25 +1,35 @@
-'use client'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { Analytics, Chat, CRM, Home, MainStackLogo, Notification } from '@/app/assets/svgs/icons'
+"use client";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import {
+    Analytics,
+    Chat,
+    CRM,
+    Home,
+    MainStackLogo,
+    Notification,
+} from "@/app/assets/svgs/icons";
 import { FaMoneyBills } from "react-icons/fa6";
-import axiosClient from '@/utils/axios'
-import { IUser } from '@/utils/types'
-import UserMenu from '../Menuitem'
-import { NavAppsMenu } from '../AppsMenu';
-import { cn } from '@/lib/utils';
+import axiosClient from "@/utils/axios";
+import { IUser } from "@/utils/types";
+import UserMenu from "../Menuitem";
+import { NavAppsMenu } from "../AppsMenu";
+import { cn } from "@/lib/utils";
+import useMediaQuery from "@/utils/useMediaQuery";
 
 const NavBar = () => {
     const [user, setUser] = React.useState<IUser>();
     const [activeNav, setActiveNav] = React.useState<string>("home");
     const [activeAppItem, setActiveAppItem] = React.useState<string>("Link in Bio");
+    const isMobile = useMediaQuery("(max-width: 768px)");
+    const isLargeScreen = useMediaQuery("(min-width: 1200px)");
 
     const fetchUser = async () => {
         try {
             const req = await axiosClient("/user");
             setUser(req?.data);
         } catch (error) { }
-    }
+    };
 
     useEffect(() => {
         (async () => {
@@ -34,13 +44,13 @@ const NavBar = () => {
         { label: "CRM", icon: CRM },
     ];
     return (
-        <section className='fixed top-0 left-0 right-0 z-50 mx-8'>
-            <div className='flex justify-between items-center bg-white rounded-full p-2 shadow-[0_4px_10px_rgba(0,0,0,0.08)]'>
-                <Link href={'/'}>
+        <section className="fixed top-0 left-0 right-0 z-50 mx-8">
+            <div className="flex justify-between items-center bg-white rounded-full p-2 shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
+                <Link href={"/"}>
                     <MainStackLogo />
                 </Link>
-                {/* <nav>
-                    <ul className="flex items-center gap-x-2 text-[1rem] font-semibold cursor-pointer">
+                <nav>
+                    {!isMobile && <ul className="flex items-center lg:gap-x-2 text-[1rem] font-semibold cursor-pointer">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = activeNav === item.label.toLowerCase();
@@ -62,26 +72,27 @@ const NavBar = () => {
                                 </li>
                             );
                         })}
-                        <NavAppsMenu
+                        {isLargeScreen && <NavAppsMenu
                             activeNav={activeNav}
                             setActiveNav={setActiveNav}
                             activeAppItem={activeAppItem}
                             setActiveAppItem={setActiveAppItem}
-                        />
-                    </ul>
-                </nav> */}
+                        />}
+                    </ul>}
+                </nav>
 
-
-                <div className='flex gap-x-6 items-center'>
-                    <div><Notification /></div>
-                    <div><Chat /></div>
+                <div className="flex gap-x-6 items-center">
+                    <div>
+                        <Notification />
+                    </div>
+                    <div>
+                        <Chat />
+                    </div>
                     <UserMenu user={user} />
                 </div>
             </div>
         </section>
+    );
+};
 
-
-    )
-}
-
-export default NavBar
+export default NavBar;

@@ -175,13 +175,14 @@ export default function Home() {
               </SheetTrigger>
 
               <SheetContent
+                side={"right"}
                 className={cn(
                   "bg-background fixed z-50 flex flex-col gap-4 shadow-lg",
                   "transition-transform duration-500 ease-in-out",
                   "translate-x-full",
                   "data-[state=open]:translate-x-0",
                   "data-[state=closed]:translate-x-full",
-                  "m-3 w-[30%] p-4 rounded-4xl"
+                  "lg:m-3 w-full md:w-[50%] xl:w-[35%] p-4 rounded-4xl"
                 )}
               >
                 <SheetHeader>
@@ -189,7 +190,7 @@ export default function Home() {
                     Filter
                   </SheetTitle>
                   <SheetDescription>
-                    <div className="flex gap-x-2 my-8">
+                    <div className="flex gap-x-2 my-8 overflow-x-scroll">
                       <Badge
                         variant="outline"
                         className="font-semibold text-[0.875rem] h-8 min-w-25"
