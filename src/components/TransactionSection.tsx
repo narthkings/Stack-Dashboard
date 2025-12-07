@@ -81,9 +81,9 @@ const TransactionSection = ({ transactions, isLoading = false }: TransactionSect
                         <div className="flex justify-between space-y-6" key={idx}>
                             <div className="flex gap-x-3">
                                 {type === "deposit" ? (
-                                    <GreenArrow className="inline-block mb-1 mr-2" />
+                                    <GreenArrow className="md:inline-block mb-1 mr-2 hidden " />
                                 ) : (
-                                    <RedArrow className="inline-block mb-1 mr-2" />
+                                    <RedArrow className="md:inline-block mb-1 mr-2 hidden" />
                                 )}
                                 <div className="font-medium text-[1rem] text-(--black)">
                                     <div className="capitalize">{metadata?.product_name ?? type}</div>

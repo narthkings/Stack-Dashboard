@@ -86,9 +86,9 @@ export default function Home() {
     <main className="p-8">
       <NavBar />
 
-      <section className="flex justify-between space-x-30 mt-40 w-[80%] mx-auto">
-        <div className="w-5/6">
-          <section className="flex space-x-16 ">
+      <section className="flex flex-col xl:flex-row justify-between space-x-30 mt-40 w-full xl:w-[80%] mx-auto">
+        <div className="w-full xl:w-5/6">
+          <section className="flex xl:flex-row flex-col space-x-16">
             <BalanceCard
               showInfo={false}
               label="Available Balance"
@@ -98,7 +98,7 @@ export default function Home() {
             <Button
               size={"lg"}
               variant="ghost"
-              className="bg-(--black) text-white font-semibold p-6 rounded-full w-1/6 text-[1rem] cursor-pointer"
+              className="bg-(--black) text-white font-semibold p-6 rounded-full w-full md:w-1/6 text-[1rem] cursor-pointer"
             >
               Withdraw
             </Button>
@@ -127,7 +127,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-1/4">
+        <div className="w-full xl:w-1/4">
           <BalanceCard
             label="Ledger Balance"
             amount={wallet?.ledger_balance as number}
@@ -151,8 +151,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-20 w-9/12 mx-auto">
-        <div className="flex justify-between items-center">
+      <section className="mt-20 w-full xl:w-9/12 mx-auto">
+        <div className="flex flex-col xl:flex-row justify-between space-y-6 items-start xl:items-center">
           <div>
             <div className="font-bold text-[1.5rem] text-(--black)">
               {transactions?.length ?? 0} Transactions

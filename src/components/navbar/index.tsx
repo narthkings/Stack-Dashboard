@@ -39,7 +39,7 @@ const NavBar = () => {
                 <Link href={'/'}>
                     <MainStackLogo />
                 </Link>
-                <nav>
+                {/* <nav>
                     <ul className="flex items-center gap-x-2 text-[1rem] font-semibold cursor-pointer">
                         {navItems.map((item) => {
                             const Icon = item.icon;
@@ -69,7 +69,7 @@ const NavBar = () => {
                             setActiveAppItem={setActiveAppItem}
                         />
                     </ul>
-                </nav>
+                </nav> */}
 
 
                 <div className='flex gap-x-6 items-center'>
