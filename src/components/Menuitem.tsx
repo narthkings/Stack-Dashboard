@@ -1,8 +1,7 @@
 "use client";
-"use client";
 
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineSwitchAccount } from "react-icons/md";
 

@@ -26,3 +26,6 @@ export interface IUser {
     last_name: string;
     email: string;
 }
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children?: React.ReactNode;
+}
