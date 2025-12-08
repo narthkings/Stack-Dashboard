@@ -152,7 +152,7 @@ export default function Home() {
       </section>
 
       <section className="mt-20 w-full xl:w-9/12 mx-auto">
-        <div className="flex flex-col xl:flex-row justify-between space-y-6 items-start xl:items-center">
+        <div className="flex md:flex-row md:justify-between md:items-center md:space-y-0 flex-col items-start space-y-6 ">
           <div>
             <div className="font-bold text-[1.5rem] text-(--black)">
               {transactions?.length ?? 0} Transactions
@@ -161,7 +161,8 @@ export default function Home() {
               Your transactions for the last 7 days
             </div>
           </div>
-          <div className="flex gap-x-4">
+
+          <div className="flex gap-x-4 mr-10">
             <Sheet>
               <SheetTrigger asChild>
                 <Button
@@ -336,7 +337,7 @@ export default function Home() {
             <Button
               variant="ghost"
               size={"lg"}
-              className="bg-(--light-gray) font-semibold p-6 text-(--black) rounded-full text-[1rem] w-3/4 cursor-pointer"
+              className="bg-(--light-gray) font-semibold p-6 text-(--black) rounded-full text-[1rem] w-3/5 cursor-pointer"
             >
               Export list
               <GoDownload size={"10"} color="#131316" />
@@ -344,7 +345,7 @@ export default function Home() {
           </div>
         </div>
 
-        <hr className="my-10 border-t border-gray-300" />
+        <hr className="my-6 border-t border-gray-300" />
         <Transaction isLoading={trIsLoading} transactions={transactions} />
 
       </section>
