@@ -104,7 +104,7 @@ export default function Home() {
             </Button>
           </section>
           <div className="w-full h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer minWidth="100%" minHeight="100%">
               <LineChart data={data} margin={{ top: 60, left: 0, right: 0, bottom: 40 }}>
                 <Line
                   type="monotone"
