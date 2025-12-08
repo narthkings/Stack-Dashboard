@@ -3,9 +3,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ITransaction } from '@/utils/types';
 import TransactionSection from '@/components/Transaction';
-import { Empty, GreenArrow, RedArrow } from '@/app/assets';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 
 
 jest.mock('../src/components/ui/skeleton', () => ({
