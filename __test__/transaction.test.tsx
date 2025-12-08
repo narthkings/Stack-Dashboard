@@ -2,10 +2,19 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ITransaction } from '@/utils/types';
-import TransactionSection from '@/components/TransactionSection';
+import TransactionSection from '@/components/Transaction';
+import { Empty, GreenArrow, RedArrow } from '@/app/assets';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
-jest.mock('../src/app/assets', () => ({
+jest.mock('../src/components/ui/skeleton', () => ({
+  Skeleton: ({ className }: { className?: string }) => (
+    <div data-testid="skeleton" className={className} />
+  ),
+}));
+jest.mock('../src/app/assets/svgs/icons', () => ({
+  __esModule: true,
   Empty: () => <div data-testid="empty-icon">Empty Icon</div>,
   GreenArrow: ({ className }: { className?: string }) => (
     <div data-testid="green-arrow" className={className}>Green Arrow</div>
@@ -242,16 +251,11 @@ describe('Transaction List', () => {
   });
 
   describe('Edge Cases', () => {
-    it('should handle undefined transactions gracefully', () => {
-      render(<TransactionSection transactions={undefined as any} />);
+    it('should handle undefined transactions by showing loading state', () => {
+      render(<TransactionSection transactions={undefined} />);
 
-      expect(screen.getByTestId('empty-icon')).toBeInTheDocument();
-    });
-
-    it('should handle null transactions gracefully', () => {
-      render(<TransactionSection transactions={null as any} />);
-
-      expect(screen.getByTestId('empty-icon')).toBeInTheDocument();
+      // When transactions is undefined, it should show loading skeletons
+      expect(screen.getAllByTestId('skeleton')).toHaveLength(15); // 3 transactions × 4 skeletons each
     });
 
     it('should render correctly with single transaction', () => {

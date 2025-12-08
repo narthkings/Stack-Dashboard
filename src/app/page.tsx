@@ -23,8 +23,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import axiosClient from "@/utils/axios";
 import { ITransaction, IWallet } from "@/utils/types";
-import TransactionSection from "@/components/TransactionSection";
 import BalanceCard from "@/components/BalanceCard";
+import Transaction from "@/components/Transaction";
 
 export default function Home() {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
@@ -345,7 +345,7 @@ export default function Home() {
         </div>
 
         <hr className="my-10 border-t border-gray-300" />
-        <TransactionSection isLoading={trIsLoading} transactions={transactions} />
+        <Transaction isLoading={trIsLoading} transactions={transactions} />
 
       </section>
     </main>
