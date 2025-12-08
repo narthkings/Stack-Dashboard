@@ -12,6 +12,7 @@ A responsive and modern Dashboard UI built from provided design references. It i
 - **Tailwind CSS**
 - **Shadcn**
 - **TypeScript**
+- **Jest**
 
 ---
 
@@ -28,3 +29,4 @@ A responsive and modern Dashboard UI built from provided design references. It i
 - Ensuring a **smooth responsive experience** for various device widths.
 - Using Axios **to fetch data from the API**.
 - Structuring clean and readable **React components** and leveraging Tailwind for scalable styling.
+- Writing test cases to ensure stability of the components.
