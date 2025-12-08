@@ -26,9 +26,5 @@ A responsive and modern Dashboard UI built from provided design references. It i
 
 - **Pixel-perfect translation** of the Figma design.
 - Ensuring a **smooth responsive experience** for various device widths.
-- Using Axios **to consume fetch data from the API**.
+- Using Axios **to fetch data from the API**.
 - Structuring clean and readable **React components** and leveraging Tailwind for scalable styling.
-
-## ⚠️ Troubleshooting
-
-### 🛑 CORS Error
