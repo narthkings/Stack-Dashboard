@@ -30,3 +30,8 @@ A responsive and modern Dashboard UI built from provided design references. It i
 - Using Axios **to fetch data from the API**.
 - Structuring clean and readable **React components** and leveraging Tailwind for scalable styling.
 - Writing test cases to ensure stability of the components.
+
+## ⚠️ Troubleshooting
+
+**Description:**  
+Some of the icons were not available, so I had to improvise with some other icons closed to what is on the design
