@@ -7,7 +7,7 @@ import { CgChevronDown } from "react-icons/cg";
 import { Calendar } from "@/components/ui/calendar";
 import { ChevronDownIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MultiSelect } from "@/components/ui/MultiSelect";
+import MultiSelect from "@/components/ui/MultiSelect";
 import {
   Sheet,
   SheetClose,

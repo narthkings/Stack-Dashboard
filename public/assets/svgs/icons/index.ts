@@ -1,4 +1,4 @@
-export { default as MainStackLogo } from './mainstack-logo.svg';
+export { default as MainStackLogo } from './mainstack.svg';
 export { default as Home } from './home.svg';
 export { default as Analytics } from './analytics.svg';
 export { default as Apps } from './apps.svg';

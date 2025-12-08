@@ -21,13 +21,13 @@ interface MultiSelectProps {
     className?: string;
 }
 
-export function MultiSelect({
+const MultiSelect = ({
     options,
     value,
     onChange,
     placeholder = "Select options",
     className,
-}: MultiSelectProps) {
+}: MultiSelectProps) => {
     const [open, setOpen] = useState(false);
 
     const toggleOption = (optionValue: string) => {
@@ -87,3 +87,4 @@ export function MultiSelect({
         </Popover>
     );
 }
+export default MultiSelect;
