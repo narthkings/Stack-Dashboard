@@ -19,7 +19,7 @@ const Degular = localFont({
             style: 'normal',
         },
         {
-            path: './DegularDemo-SemiBold.otf',
+            path: './DegularDemo-Semibold.otf',
             weight: '600',
             style: 'normal',
         },
