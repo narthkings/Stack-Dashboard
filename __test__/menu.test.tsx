@@ -69,7 +69,7 @@ jest.mock('lucide-react', () => ({
     ),
 }));
 
-jest.mock('../src/app/assets', () => ({
+jest.mock('../public/assets/svgs/icons', () => ({
     Apps: ({ className }: any) => (
         <div data-testid="apps-icon" className={className}>Apps</div>
     ),

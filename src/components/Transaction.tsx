@@ -1,5 +1,5 @@
 "use client";
-import { Empty, GreenArrow, RedArrow } from "@/app/assets";
+import { Empty, GreenArrow, RedArrow } from "../../public/assets";
 import { Button } from "./ui/button";
 import { ITransaction } from "@/utils/types";
 import { Skeleton } from "@/components/ui/skeleton";

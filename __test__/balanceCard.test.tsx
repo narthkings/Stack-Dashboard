@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import BalanceCard from '@/components/BalanceCard';
 
 
-jest.mock('../src/app/assets', () => ({
+jest.mock('../public/assets/svgs/icons', () => ({
     Info: ({ className }: { className?: string }) => (
         <div data-testid="info-icon" className={className}>Info Icon</div>
     ),

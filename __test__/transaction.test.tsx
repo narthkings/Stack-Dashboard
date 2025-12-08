@@ -10,7 +10,7 @@ jest.mock('../src/components/ui/skeleton', () => ({
     <div data-testid="skeleton" className={className} />
   ),
 }));
-jest.mock('../src/app/assets/svgs/icons', () => ({
+jest.mock('../public/assets/svgs/icons', () => ({
   __esModule: true,
   Empty: () => <div data-testid="empty-icon">Empty Icon</div>,
   GreenArrow: ({ className }: { className?: string }) => (

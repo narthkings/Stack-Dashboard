@@ -8,7 +8,7 @@ import { MdOutlineSwitchAccount } from "react-icons/md";
 import { Settings, ShoppingBag, Gift, Bug, LogOut } from "lucide-react";
 import { useState } from "react";
 import { IUser } from "@/utils/types";
-import { Apps } from "@/app/assets";
+import { Apps } from "../../public/assets";
 
 export default function UserMenu({ user }: { user: IUser | undefined }) {
     const [open, setOpen] = useState(false);

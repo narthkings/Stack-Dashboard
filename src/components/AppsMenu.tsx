@@ -1,6 +1,6 @@
 "use client";
 
-import { Apps } from "@/app/assets";
+import { Apps } from "../../public/assets";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { ChevronDown, AppWindow, Store, Wallet, BookOpen } from "lucide-react";

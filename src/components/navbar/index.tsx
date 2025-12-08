@@ -8,7 +8,7 @@ import {
     Home,
     MainStackLogo,
     Notification,
-} from "@/app/assets/svgs/icons";
+} from "../../../public/assets/svgs/icons";
 import { FaMoneyBills } from "react-icons/fa6";
 import axiosClient from "@/utils/axios";
 import { IUser } from "@/utils/types";

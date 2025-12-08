@@ -1,5 +1,5 @@
 "use client";
-import { Info } from "@/app/assets";
+import { Info } from "../../public/assets";
 import { Skeleton } from "./ui/skeleton";
 
 interface BalanceCardProps {
